@@ -1,0 +1,58 @@
+{% load currency_filters %}
+{% load category_tags %}
+{% load i18n %}
+<div class="contain-to-grid">
+<nav class="top-bar" data-topbar role="navigation">
+    {# This is used in mobile view #}
+    <ul class="title-area">
+        <li class="name"><!-- Leave this empty --></li>
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+        {% block nav_dropdown %}
+            <ul class="left">
+                <li class="has-dropdown">
+                    <a href="#">
+                        {% trans "Browse store" %}
+                    </a>
+                    <ul class="dropdown">
+                        {% category_tree depth=2 as tree_categories %}
+                        <li><a href="{% url 'catalogue:index' %}">{% trans "All products" %}</a></li>
+                        {% if tree_categories %}
+                            {% for tree_category, info in tree_categories %}
+                                {% if info.has_children %}
+                                    <li class="has-dropdown">
+                                    <a href="{{ tree_category.get_absolute_url }}">{{ tree_category.name }}</a>
+                                    <ul class="dropdown">
+                                {% else %}
+                                    <li><a href="{{ tree_category.get_absolute_url }}">{{ tree_category.name }}</a></li>
+                                {% endif %}
+
+                            {% for close in info.num_to_close %}
+                                </ul>
+                                </li>
+                            {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </li>
+
+                {% block nav_dropdown_extra_items %}
+                    <li><a href="{% url 'offer:list' %}">{% trans "Offers" %}</a></li>
+                {% endblock %}
+            </ul>
+        {% endblock %}
+
+        {% block nav_extra %}
+            <ul class="right">
+                <li><a href="/about/">{% trans "About" %}</a></li>
+            </ul>
+        {% endblock %}
+
+        {% include "partials/search.html" %}
+    </section>
+
+</nav><!-- /navbar -->
+</div>

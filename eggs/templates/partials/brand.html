@@ -1,0 +1,8 @@
+{% load static %}
+
+<div class="large-2 columns">
+    <a href="{{ homepage_url }}"><img src="{% static 'eggs/img/eggforsale.png' %}" alt="{{ shop_name }} - {{ shop_tagline }}"></a>
+</div>
+<div class="large-6 columns">
+{% block brand_title %}<h1><a href="{{ homepage_url }}">{{ shop_name }}</a></h1><h3> {{ shop_tagline }}</h3>{% endblock %}
+</div>

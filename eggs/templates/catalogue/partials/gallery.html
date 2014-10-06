@@ -1,0 +1,42 @@
+{% load thumbnail %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% with all_images=product.images.all %}
+    {# use length rather then count as the images get queried anyways #}
+
+    {% if all_images|length > 1 %}
+        <div id="product_gallery" class="slider slider-for">
+            {% for image in all_images %}
+                <div class="th">
+                    {% thumbnail image.original "440x400" upscale=False as thumb %}
+                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                    {% endthumbnail %}
+                </div>
+            {% endfor %}
+        </div>
+        <div id="product_gallery" class="slider slider-nav">
+            {% for image in all_images %}
+                <div class="th">
+                    {% thumbnail image.original "440x400" upscale=False as thumb %}
+                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                    {% endthumbnail %}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+
+        {# Only one image to show #}
+        <div id="product_gallery">
+            <div class="th">
+                {% with image=product.primary_image %}
+                    {% thumbnail image.original "440x400" upscale=False as thumb %}
+                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                    {% endthumbnail %}
+                {% endwith %}
+            </div>
+        </div>
+
+    {% endif %}
+{% endwith %}

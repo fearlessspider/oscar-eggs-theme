@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% load history_tags %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "All reviews" %} | {{ product.title }} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumbs">
+        <li>
+            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
+        </li>
+        {% with category=product.categories.all.0 %}
+            {% for c in category.get_ancestors %}
+                <li>
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </li>
+            {% endfor %}
+            <li>
+                <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+            </li>
+        {% endwith %}
+        <li class="current">{% trans "All reviews" %}</li>
+    </ul>
+{% endblock %}
+
+{% block headertext %}
+    {% trans "Customer reviews" %}
+{% endblock  %}
+
+{% block content %}
+
+    <section>        
+        {% include 'catalogue/reviews/review_product.html' %}
+
+        {% if reviews %}
+            <h4>{% trans "Sort by:" %}</h4>
+            <form action="." method="get" class="form-inline">
+                <select name="sort_by">
+                    <option value="score">{% trans "Score" %}</option>
+                    <option value="recency">{% trans "Recency" %}</option>
+                </select>
+                <input type="submit" class="button secondary" value="{% trans "Go" %}" />
+            </form>
+
+            {% for review in reviews %}
+                {% include 'catalogue/partials/review.html' %}
+            {% endfor %}
+            {% include 'partials/pagination.html' %}
+
+        {% else %}
+            <p>{% trans "This product does not have any reviews yet." %}</p>
+        {% endif %}
+
+    </section>
+{% endblock %}

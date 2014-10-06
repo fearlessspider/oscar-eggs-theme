@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}
+    {{ flatpage.title}} | {{ block.super }}
+{% endblock %}
+
+{% block headertext %}
+    {{ flatpage.title }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumbs">
+        <li>
+            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
+        </li>
+        <li class="current">{{ flatpage.title }}</li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <article>{{ flatpage.content }}</article>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% load string_filters %}
+
+{% comment %}
+Use message tags to control these alerts.  Available tags include:
+- safe: allow HTML in the message
+- block: for longer messages - this adds extra padding
+- noicon: don't show an icon
+- error/success/info - these change the connotation of the alert
+{% endcomment %}
+
+<div id="messages">
+{% if messages %}
+    {% for message in messages %}
+    <div data-alert class="alert-box {% for tag in message.tags|split %} {{ tag }} {% endfor %} fade in">
+            <a href="#" class="close">&times;</a>
+            {% if 'noicon' not in message.tags %}
+                {# Include an icon by default #}
+                {% if 'success' in message.tags %}
+                    <i class="fi-check"></i>
+                {% endif %}
+                {% if 'info' in message.tags %}
+                    <i class="fi-info"></i>
+                {% endif %}
+                {% if 'warning' in message.tags %}
+                    <i class="fi-wrench"></i>
+                {% endif %}
+                {% if 'error' in message.tags %}
+                    <i class="fi-alert"></i>
+                {% endif %}
+            {% endif %}
+
+            {# Allow HTML to be embedded in messages #}
+            {% if 'safe' in message.tags %}
+                {{ message|safe }}
+            {% else %}
+                {{ message }}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endif %}
+</div>

@@ -1,0 +1,42 @@
+{% load history_tags %}
+{% load basket_tags %}
+{% load currency_filters %}
+{% load thumbnail %}
+{% load i18n %}
+{% load staticfiles %}
+
+<div class="basket-mini-item">
+    {% if request.basket.num_lines %}
+        {% for line in request.basket.all_lines %}
+            <div class="row">
+                <div class="large-2 columns">
+                    <div class="image_container">
+                        {% with image=line.product.primary_image %}
+                            {% thumbnail image.original "100x100" upscale=False as thumb %}
+                            <a href="{{ line.product.get_absolute_url }}"><img class="th" src="{{ thumb.url }}" alt="{{ line.product.get_title }}"></a>
+                            {% endthumbnail %}
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="large-4 columns">
+                    <h5><a href="{{ line.product.get_absolute_url }}">{{ line.description }}</a></h5>
+                </div>
+                <div class="large-2 columns large-text-center"><strong>{% trans "Qty" %}</strong> {{ line.quantity }}</div>
+                <div class="large-4 columns price_color large-text-right">{{ line.unit_price_excl_tax|currency:request.basket.currency }}</div>
+            </div>
+        {% endfor %}
+        <div class="form-actions">
+            <h4 class="large-text-right">
+                {% if request.basket.is_tax_known %}
+                    <small>{% trans "Total:" %} {{ request.basket.total_incl_tax|currency:request.basket.currency }}</small> 
+                {% else %}
+                    <small>{% trans "Total:" %} {{ request.basket.total_excl_tax|currency:request.basket.currency }}</small> 
+                {% endif %}
+            </h4>
+            <a href="{% url 'basket:summary' %}" class="button info tiny">{% trans "View basket" %}</a>
+            <a href="{% url 'checkout:index' %}" class="button tiny"><i class="fi-shopping-cart"></i> {% trans "Checkout" %}</a>
+        </div>
+    {% else %}
+        <p>{% trans "Your basket is empty." %}</p>
+    {% endif %}
+</div>

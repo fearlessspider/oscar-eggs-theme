@@ -1,0 +1,56 @@
+{% load i18n %}
+
+<div id="navbar-accounts" class="contain-to-grid">
+<nav class="top-bar" data-topbar role="navigation">
+    {# This is used in mobile view #}
+    <ul class="title-area">
+        <li class="name"><!-- Leave this empty --></li>
+        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+
+        <section class="top-bar-section">
+                {% if LANGUAGES|length > 1 %}
+                    <ul class="left">
+    <li class="has-form">
+                    <form id="language_selector" class="pull-left navbar-form" action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ language_neutral_url_path }}" />
+                        <select name="language">
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE%} selected="selected"{% endif %}>
+                                    {{ language.name_local }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button class="button" type="submit">{% trans "Go" %}</button>
+                    </form>
+                    </li>
+                    </ul>
+                {% endif %}
+                <ul class="right">
+                    {% if user.is_authenticated %}
+                        <li>
+                            {% if num_unread_notifications > 0 %}
+                                {# If user has new notifications - we change account link to go to inbox #}
+                                <a href="{% url 'customer:notifications-inbox' %}">
+                                    <i class="fi-clipboard-notes"></i>
+                                    {% trans "Account" %}
+                                    <span class="label label-important">{{ num_unread_notifications }}</span>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'customer:summary' %}"><i class="fi-address-book"></i> {% trans "Account" %}</a>
+                            {% endif %}
+                        </li>
+                        {% if user.is_staff or perms.partner.dashboard_access %}
+                            <li><a href="{% url 'dashboard:index' %}"><i class="fi-list"></i> {% trans "Dashboard" %}</a></li>
+                        {% endif %}
+                        <li><a id="logout_link" href="{% url 'customer:logout' %}"><i class="fi-unlock"></i> {% trans "Logout" %}</a></li>
+                    {% else %}
+                        <li><a id="login_link" href="{% url 'customer:login' %}"><i class="fi-lock"></i> {% trans "Login or register" %}</a></li>
+                    {% endif %}
+                </ul>
+        </section>
+    </nav>
+</div>

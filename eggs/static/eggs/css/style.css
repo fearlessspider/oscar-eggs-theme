@@ -1,0 +1,64 @@
+.top-bar, .contain-to-grid, .top-bar-section ul li, .top-bar-section li:not(.has-form) a:not(.button), .top-bar-section .has-form {
+    background: #52b808;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button):hover {
+    background: #176091;
+    color: #fff
+}
+
+#navbar-accounts .top-bar, #navbar-accounts.contain-to-grid, #navbar-accounts .top-bar-section ul li, #navbar-accounts .top-bar-section li:not(.has-form) a:not(.button) {
+    background: transparent;
+    color: #4a4a4a;
+}
+
+button.warning, .button.warning {
+    background-color: #fedb43;
+    border-color: #fedb43;
+}
+
+button.warning:hover, button.warning:focus, .button.warning:hover, .button.warning:focus {
+    background-color:#dedb43;
+}
+
+.star-rating {
+  color: #CBCBCB;
+}
+.star-rating i {
+  letter-spacing: -1px;
+  width: auto;
+}
+.star-rating a {
+  margin-left: 10px;
+}
+.star-rating.One i:first-child {
+  color: #E6CE31;
+}
+.star-rating.Two i:first-child,
+.star-rating.Two i:first-child + i {
+  color: #E6CE31;
+}
+.star-rating.Three i:first-child,
+.star-rating.Three i:first-child + i,
+.star-rating.Three i:first-child + i + i {
+  color: #E6CE31;
+}
+.star-rating.Four i:first-child,
+.star-rating.Four i:first-child + i,
+.star-rating.Four i:first-child + i + i,
+.star-rating.Four i:first-child + i + i + i {
+  color: #E6CE31;
+}
+.star-rating.Five i {
+  color: #E6CE31;
+}
+
+.page {
+    margin-top: 10px;
+}
+
+.footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #f5f6f6;
+}

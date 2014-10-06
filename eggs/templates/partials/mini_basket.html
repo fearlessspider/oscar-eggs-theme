@@ -1,0 +1,18 @@
+{% load currency_filters %}
+{% load i18n %}
+
+<div class="basket-mini large-4 columns large-text-right">
+
+    <button data-dropdown="basket" data-options="align:bottom" class="button secondary dropdown">
+        <i class="fi-shopping-cart"></i>
+    <strong>{% trans "Basket total:" %}</strong>
+{% if request.basket.is_tax_known %}
+    {{ request.basket.total_incl_tax|currency:request.basket.currency }}
+{% else %}
+    {{ request.basket.total_excl_tax|currency:request.basket.currency }}
+{% endif %}
+    </button>
+    <div id="basket" class="f-dropdown content medium" data-dropdown-content tabindex="-1">
+        {% include "basket/partials/basket_quick.html" %}
+    </div>
+</div>

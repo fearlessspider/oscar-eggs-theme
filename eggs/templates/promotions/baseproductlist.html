@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load product_tags %}
+
+{% block content %}
+<section>
+    <h2 class="subheader">{{ promotion.name }}</h2>
+
+    {{ promotion.description|safe }}
+
+    <div class="row">
+        {% for product in products %}
+        <div class="large-4 columns {% if forloop.counter0|divisibleby:"4" %}no-margin{% endif %}">{% render_product product %}</div>
+        {% endfor %}
+    </div>
+
+    {% if block.link_url %}
+        <a href="{{ block.link_url }}">{% trans "See more" %}</a>
+    {% endif %}
+</section>
+{% endblock %}

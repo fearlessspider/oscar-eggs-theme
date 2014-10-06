@@ -1,0 +1,52 @@
+{% extends "customer/baseaccountpage.html" %}
+{% load i18n %}
+
+{% block tabcontent %}
+    {% if wishlists %}
+        <table>
+            <tbody>
+                <tr>
+                    <th>{% trans 'Name' %}</th>
+                    <th>{% trans 'Number of products' %}</th>
+                    <th>{% trans 'Action' %}</th>
+                </tr>
+                {% for wishlist in wishlists %}
+                    <tr>
+                        <td><a href="{% url 'customer:wishlists-detail' key=wishlist.key %}">{{ wishlist.name }}</a></td>
+                        <td>{{ wishlist.lines.count }}</td>
+                        <td>
+                            <ul class="button-group">
+                                <li><a class="button secondary" href="{% url 'customer:wishlists-detail' key=wishlist.key %}">{% trans 'View' %}</a></li>
+                                <li><button href="#" data-dropdown="wishlist" aria-controls="wishlist" aria-expanded="false" class="button dropdown secondary">
+                                    <i class="fi-wrench"></i>
+                                </button></li>
+                                <ul id="wishlist" data-dropdown-content class="f-dropdown" aria-hidden="true" tabindex="-1">
+                                    <li>
+                                        <a href="{% url 'customer:wishlists-update' key=wishlist.key %}">
+                                            {% trans 'Wish list settings' %}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'customer:wishlists-delete' key=wishlist.key %}">
+                                            {% trans 'Delete' %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include "partials/pagination.html" %}
+    {% else %}
+        <p>
+            {% trans "You don't have any wish lists yet." %}
+        </p>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'customer:wishlists-create' %}" class="button secondary">{% trans 'Create a new wish list' %}</a>
+    </p>
+
+{% endblock tabcontent %}

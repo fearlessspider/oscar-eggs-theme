@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load wishlist_tags %}
+
+{% if user.is_authenticated %}
+    {% with wishlists=user.wishlists.all %}
+        {# Select wishlists that contains product #}
+        {% wishlists_containing_product wishlists product as product_wishlists %}
+        {% if wishlists %}
+
+                <button href="#" data-dropdown="wishlist" aria-controls="wishlist" aria-expanded="false" class="button dropdown tiny secondary">{% trans "Add to wish list" %}</button><br>
+
+                <ul id="wishlist" data-dropdown-content class="f-dropdown" aria-hidden="true" tabindex="-1">
+                    {% for wishlist in wishlists %}
+                        {% if wishlist not in product_wishlists %}
+	                        <li>
+	                                <a href="{% url 'customer:wishlists-add-product' key=wishlist.key product_pk=product.pk %}">
+	                                    {% blocktrans with name=wishlist.name %}
+	                                        Add to '{{ name }}' wish list
+	                                    {% endblocktrans %}
+	                                </a>
+	                        </li>
+						{% endif %}
+                    {% endfor %}
+                    <li><a href="{% url 'customer:wishlists-create-with-product' product_pk=product.pk %}">{% trans 'Create a new wishlist' %}</a></li>
+                </ul>
+        {% else %}
+            {# 1 or no existing wishlists - show a simple button #}
+            <form id="add_to_wishlist_form" action="{% url 'customer:wishlists-add-product' product_pk=product.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="button tiny secondary">{% trans "Add to wish list" %}</button>
+            </form>
+        {% endif %}
+
+        {% for wishlist in product_wishlists %}
+            <form action="{% url 'customer:wishlists-remove-product' key=wishlist.key product_pk=product.id %}" method="post">
+                {% csrf_token %}
+                {% blocktrans with name=wishlist.name url=wishlist.get_absolute_url %}
+                    <span class="pull-left">Product is in <a href="{{ url }}">'{{ name }}'</a> wishlist.</span>
+                {% endblocktrans %}
+                <button type="submit" class="button tiny secondary">{% trans "Remove" %}</button>
+            </form>
+        {% endfor %}
+    {% endwith %}
+{% else %}
+    <button class="button secondary tiny" disabled="disabled" title="{% trans 'Please login to add products to a wish list.' %}">{% trans 'Add to wish list' %}</button><br/>
+{% endif %}

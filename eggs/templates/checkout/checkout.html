@@ -1,0 +1,163 @@
+{% extends "checkout/layout.html" %}
+{% load currency_filters %}
+{% load thumbnail %}
+{% load i18n %}
+{% load purchase_info_tags %}
+{% load staticfiles %}
+
+{% block title %}
+    {% trans "Checkout" %} | {{ block.super }}
+{% endblock %}
+
+{% block checkout_nav %}
+    {% include 'checkout/nav.html' %}
+{% endblock %}
+
+{% block content %}
+
+    {% if error %}
+        <div class="alert alert-error">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <div class="row shipping-payment">
+        {% block shipping_address %}
+            <div class="large-6 columns">
+
+                <h2 class="subheader">{% trans "Shipping" %}</h2>
+
+                {% if shipping_address %}
+                    <div class="well well-info">
+                        <h4>{% trans "Address" %}</h4>
+                        <address>
+                            {% for field in shipping_address.active_address_fields %}
+                                {{ field }}<br/>
+                            {% endfor %}
+                        </address>
+
+                        {% if shipping_address.phone_number %}
+                            <h4>{% trans "Contact" %}</h4>
+                            <p>
+                                {% trans "Phone" %}: {{ shipping_address.phone_number }}
+                                {% if guest_email %}
+                                    <br/>{% trans "Email" %}: {{ guest_email }}
+                                {% endif %}
+                            </p>
+                        {% endif %}
+
+                        {% if shipping_address.notes %}
+                            <h4>{% trans "Instructions" %}</h4>
+                            <p>{{ shipping_address.notes|linebreaks }}</p>
+                        {% endif %}
+
+                        {% block shipping_address_actions %}
+                            <div class="alert-actions">
+                                <a href="{% url 'checkout:shipping-address' %}" class="button secondary">{% trans "Change shipping address" %}</a>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endif %}
+
+                {% if shipping_method %}
+                    <div class="well well-info">
+                        <h4>{% trans "Shipping method" %}</h4>
+                        <p>{{ shipping_method.name }}
+                            {% if shipping_method.description %}
+                                - {{ shipping_method.description|safe }}
+                            {% endif %}
+                        </p>
+
+                        {% block shipping_method_actions %}
+                            <div class="alert-actions">
+                                <a href="{% url 'checkout:shipping-method' %}" class="button secondary">{% trans "Change shipping method" %}</a>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endblock shipping_address %}
+
+        {# You will almost certainly want to override this block to provide a payment summary #}
+        {% block payment_method %}
+            <div class="span6">
+                <h2 class="subheader">{% trans "Payment" %}</h2>
+                <div class="well well-success">
+                    <h4>{% trans "Payment" %}</h4>
+                    <p>{% trans "Payment details to go here" %}</p>
+                    <div class="alert-actions">
+                        <a href="{% url 'checkout:payment-details' %}" class="button secondary">{% trans "Change payment details" %}</a>
+                    </div>
+                </div>
+            </div>
+        {% endblock payment_method %}
+    </div>
+
+    {% block order_contents %}
+        <h2 class="subheader">{% trans "Order contents" %}</h2>
+
+        <div class="basket-title">
+            <div class="row">
+                <h4 class="large-9 columns">{% trans "Product" %}</h4>
+                <h4 class="large-1 columns large-text-center">{% trans "Quantity" %}</h4>
+                <h4 class="large-2 columns large-text-right">{% trans "Price" %}</h4>
+            </div>
+        </div>
+        {% for line in basket.all_lines %}
+            {% purchase_info_for_line request line as session %}
+            <div class="basket-items">
+                <div class="row">
+                    <div class="large-2 columns">
+                        <div class="image_container">
+                            {% with image=line.product.primary_image %}
+                                {% thumbnail image.original "100x100" upscale=False as thumb %}
+                                <a href="{{ form.instance.product.get_absolute_url }}"><img class="th" src="{{ thumb.url }}" alt="{{ product.get_title }}"></a>
+                                {% endthumbnail %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="large-7 columns">
+                        <h4><a href="{{ line.product.get_absolute_url }}">{{ line.description }}</a></h4>
+                        <span class="availability {{ session.availability.code }}">{{ session.availability.message }}</span>
+                    </div>
+                    <div class="large-1 columns large-text-center">
+                        {{ line.quantity }}
+                    </div>
+                    <div class="large-2 columns large-text-right">
+                        <p class="price_color">
+                            {% if not show_tax_separately and line.is_tax_known %}
+                                {{ line.line_price_incl_tax|currency:basket.currency }}
+                            {% else %}
+                                {{ line.line_price_excl_tax|currency:basket.currency }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="large-6 columns">&nbsp;</div>
+            <div class="large-6 columns">
+                {% include 'basket/partials/basket_totals.html' %}
+            </div>
+        </div>
+
+        {% block order_contents_actions %}
+            <div class="form-actions">
+                <a href="{% url 'basket:summary' %}" class="button secondary">{% trans "Edit order contents" %}</a>
+            </div>
+        {% endblock %}
+
+    {% endblock order_contents %}
+
+    {% block shipping_method %}
+    {% endblock shipping_method %}
+
+    {% block payment_details %}
+    {% endblock payment_details %}
+
+    {% block place_order %}
+    {% endblock place_order %}
+
+{% endblock content %}

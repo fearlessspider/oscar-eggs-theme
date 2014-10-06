@@ -1,0 +1,21 @@
+{% load i18n %}
+
+{% if form.is_bound and not form.is_valid %}
+    <div data-alert class="alert-box alert">
+        <strong>{% trans "Oops! We found some errors" %}</strong> - {% trans "please check the error messages below and try again" %}
+        <a href="#" class="close">&times;</a>
+    </div>
+{% endif %}
+
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <div data-alert class="alert-box alert">
+            <span class="help-inline"><i class="fi-exclamation-sign"></i> {{ error }}</span>
+            <a href="#" class="close">&times;</a>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% for field in form %}
+    {% include 'partials/form_field.html' with field=field %}
+{% endfor %}

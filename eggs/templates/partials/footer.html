@@ -1,0 +1,19 @@
+{% load i18n %}
+<footer class="footer">
+    <div class="row">
+        <div class="large-6 columns">
+            Powered by <a href="https://www.python.org">Python</a> &amp; <a href="https://www.djangoproject.com">Django Framework</a> &amp; <a href="http://oscarcommerce.com">Oscar</a>
+        </div>
+        <div class="large-6 columns">
+        {% block footer %}
+            {% comment %}
+                Could be used for displaying links to privacy policy, terms of service, etc.
+                We have a CSS class defined:
+                    <ul class="footer_links inline">
+                        ...
+                    </ul>
+             {% endcomment %}
+        {% endblock %}
+        </div>
+    </div>
+</footer>
