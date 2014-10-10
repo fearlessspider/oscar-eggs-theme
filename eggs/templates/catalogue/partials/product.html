@@ -5,12 +5,12 @@
 {% load staticfiles %}
 
 {% block product %}
-    <article class="product_pod">
+    <article class="product_pod hproduct">
         {% block product_image %}
             <div class="image_container">
                 {% with image=product.primary_image %}
                     {% thumbnail image.original "x155" upscale=False as thumb %}
-                    <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="th"></a>
+                    <a href="{{ product.get_absolute_url }}"><img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="th product_thumb"></a>
                     {% endthumbnail %}
                 {% endwith %}
             </div>
@@ -29,7 +29,7 @@
         {% endblock %}
 
         {% block product_title %}
-            <h3><a href="{{ product.get_absolute_url }}">{{ product.get_title|truncatewords:4 }}</a></h3>
+            <h3 class="product-title"><a href="{{ product.get_absolute_url }}" rel="product">{{ product.get_title|truncatewords:4 }}</a></h3>
         {% endblock %}
 
         {% block product_price %}

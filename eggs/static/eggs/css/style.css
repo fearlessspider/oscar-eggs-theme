@@ -62,3 +62,18 @@ button.warning:hover, button.warning:focus, .button.warning:hover, .button.warni
     padding-bottom: 10px;
     background: #f5f6f6;
 }
+
+.promotion_image {
+    position: relative;
+}
+
+.promotion_title {
+    position: absolute;
+    top: 40%;
+    left: 20px;
+    right: 20px;
+}
+
+.promotion_title h1 {
+    color: #ffffff;
+}

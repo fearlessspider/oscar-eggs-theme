@@ -15,8 +15,9 @@
     </header><!-- /header -->
 
     <div class="page">
-       <div class="page_inner">
-            {% include 'partials/alert_messages.html' %}
+       <div class="row">
+            <div class="large-12 columns">
+                {% include 'partials/alert_messages.html' %}
 
             <h1 class="subheader">{% block checkout_title %}{% endblock %}</h1>
 
@@ -45,6 +46,7 @@
                 {% for promotion in promotions_page %}
                     {% render_promotion promotion %}
                 {% endfor %}
+            </div>
             </div>
         </div><!-- /page_inner -->
     </div>
