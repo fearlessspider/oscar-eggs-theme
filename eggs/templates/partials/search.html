@@ -1,15 +1,15 @@
 {% load i18n %}
 <ul class="left">
     <li class="has-form">
-        <form method="get" action="{% url 'search:search' %}"
-        <div class="row collapse">
-            <div class="large-8 small-9 columns">
-                {{ search_form.q }}
+        <form method="get" action="{% url 'search:search' %}">
+            <div class="row collapse">
+                <div class="large-8 small-9 columns">
+                    {{ search_form.q }}
+                </div>
+                <div class="large-4 small-3 columns">
+                    <input type="submit" value="{% trans "Search" %}" class="warning button expand"/>
+                </div>
             </div>
-            <div class="large-4 small-3 columns">
-                <input type="submit" value="{% trans "Search" %}" class="warning button expand"/>
-            </div>
-        </div>
         </form>
     </li>
 </ul>

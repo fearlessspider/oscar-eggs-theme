@@ -14,10 +14,13 @@
 {% endblock %}
 
 {% block content %}
+<div class="row">
+    <div class="large-12 columns">
 
     {% if error %}
-        <div class="alert alert-error">
+        <div data-alert class="alert-box">
             {{ error }}
+            <a href="#" class="close">&times;</a>
         </div>
     {% endif %}
 
@@ -28,7 +31,7 @@
                 <h2 class="subheader">{% trans "Shipping" %}</h2>
 
                 {% if shipping_address %}
-                    <div class="well well-info">
+                    <div class="panel info">
                         <h4>{% trans "Address" %}</h4>
                         <address>
                             {% for field in shipping_address.active_address_fields %}
@@ -60,7 +63,7 @@
                 {% endif %}
 
                 {% if shipping_method %}
-                    <div class="well well-info">
+                    <div class="panel info">
                         <h4>{% trans "Shipping method" %}</h4>
                         <p>{{ shipping_method.name }}
                             {% if shipping_method.description %}
@@ -80,9 +83,9 @@
 
         {# You will almost certainly want to override this block to provide a payment summary #}
         {% block payment_method %}
-            <div class="span6">
+            <div class="large-6 columns">
                 <h2 class="subheader">{% trans "Payment" %}</h2>
-                <div class="well well-success">
+                <div class="panel success">
                     <h4>{% trans "Payment" %}</h4>
                     <p>{% trans "Payment details to go here" %}</p>
                     <div class="alert-actions">
@@ -159,5 +162,6 @@
 
     {% block place_order %}
     {% endblock place_order %}
-
+    </div>
+</div>
 {% endblock content %}
