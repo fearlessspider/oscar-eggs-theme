@@ -136,6 +136,9 @@
         {% if call_home and not debug %}
             <img src="//oscar-static.tangentlabs.co.uk/tracker.gif?{{ call_home }}" style="display:none" />
         {% endif %}
+        {% if eggs_call_home and not debug %}
+            <img src="//eggsforsale.com/pixel/eggs.png?{{ eggs_call_home }}" style="display:none" />
+        {% endif %}
     {% endblock %}
 {% endblock %}
 

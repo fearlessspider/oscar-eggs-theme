@@ -105,6 +105,9 @@
 
         {# Page meta-data - this is populated by the 'metadata' template context processor #}
         <!-- {% trans "Version:" %} {{ version }} -->
-        <script type="text/javascript" charset="utf-8" src="//s3.amazonaws.com/manycontacts-bars/54356475c2af20ba3a8ff199.js"></script>
+        <!-- {% trans "Version:" %} {{ eggs_version }} -->
+        {% if eggs_manycontacts_bar %}
+        <script type="text/javascript" charset="utf-8" src="//s3.amazonaws.com/manycontacts-bars/{{ eggs_manycontacts_bar }}.js"></script>
+        {% endif %}
     </body>
 </html>
