@@ -14,7 +14,7 @@
 {% else %}
     <h2 class="price_color"></h2>
 {% endif %}
-<p class="{{ session.availability.code }} availability" itemprop="availability" content="in_stock">
+<p class="{{ session.availability.code }} availability in-stock" itemprop="availability" content="in_stock">
     <i class="fi-{% if session.availability.is_available_to_buy %}check{% else %}x{% endif %}"></i>
     {% if verbose %}
         {{ session.availability.message }}
