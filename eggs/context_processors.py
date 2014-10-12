@@ -3,6 +3,7 @@ import platform
 import django
 from django.conf import settings
 import oscar
+import eggs
 
 
 def usage_statistics_string():
@@ -31,7 +32,7 @@ def metadata(request):
     Add some generally useful metadata to the template context
     """
     return {'eggs_display_version': getattr(settings, 'EGGS_DISPLAY_VERSION', False),
-            'eggs_version': getattr(settings, 'EGGS_VERSION', 'N/A'),
+            'eggs_version': eggs.get_version(),
             'eggs_call_home': usage_statistics_string(),
             'eggs_manycontacts_bar': getattr(settings, 'EGGS_MANYCONTACTS_BAR', False),
             }

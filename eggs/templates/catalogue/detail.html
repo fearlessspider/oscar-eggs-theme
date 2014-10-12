@@ -25,7 +25,7 @@
     {% with category=product.categories.all.0 %}
         {% for c in category.get_ancestors %}
         <li>
-            <a href="{{ c.get_absolute_url }}" itemprop="category">{{ c.name }}</a>
+            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
         </li>
         {% endfor %}
         <li class="current">{{ product.title }}</li>
@@ -64,7 +64,7 @@
             pops out when clicked.  A bit like the Django-Debug-Toolbar button
             {% endcomment %}
             {% if user.is_authenticated and user.is_staff %}
-                <a class="right hidden-phone" href="{% url 'dashboard:catalogue-product' pk=product.id %}"><small><i class="icon-edit"></i> {% trans "Edit this product" %}</small></a>
+                <a class="right hidden-for-small-only" href="{% url 'dashboard:catalogue-product' pk=product.id %}"><small><i class="fi-page-edit"></i> {% trans "Edit this product" %}</small></a>
             {% endif %}
             <h1 class="product-title" itemprop="name">{{ product.get_title }}</h1>
 
@@ -112,9 +112,7 @@
 
     {% block product_description %}
         {% if product.description %}
-        <div id="product_description">
-            <h2 class="subheader">{% trans "Product Description" %}</h2>
-        </div>
+        <h2 class="subheader">{% trans "Product Description" %}</h2>
         <p itemprop="description">{{ product.description|safe }}</p>
         {% endif %}
     {% endblock %}
@@ -208,7 +206,7 @@
             <h2 class="subheader">{% trans "Related items" %}</h2>
             <div class="row">
                 {% for product in related_products %}
-                <div class="large-2 columns {% if forloop.counter0|divisibleby:"6" %}no-margin{% endif %}">
+                <div class="large-4 columns {% if forloop.counter0|divisibleby:"3" %}no-margin{% endif %}">
                     {% render_product product %}
                 </div>
                 {% endfor %}
@@ -221,7 +219,7 @@
             <h2 class="subheader">{% trans "Recommended items" %}</h2>
             <div class="row">
                 {% for product in recommended_products %}
-                <div class="large-2 columns {% if forloop.counter0|divisibleby:"6" %}no-margin{% endif %}">
+                <div class="large-4 columns {% if forloop.counter0|divisibleby:"3" %}no-margin{% endif %}">
                     {% render_product product %}
                 </div>
                 {% endfor %}
