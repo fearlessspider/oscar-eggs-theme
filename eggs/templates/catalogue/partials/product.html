@@ -5,7 +5,7 @@
 {% load staticfiles %}
 
 {% block product %}
-    <article class="product_pod hproduct">
+    <article class="product_pod hproduct text-center">
         {% block product_image %}
             <div class="image_container">
                 {% with image=product.primary_image %}
@@ -29,7 +29,7 @@
         {% endblock %}
 
         {% block product_title %}
-            <h3 class="product-title"><a href="{{ product.get_absolute_url }}" rel="product">{{ product.get_title|truncatewords:4 }}</a></h3>
+            <h3 class="product-title fn org"><a href="{{ product.get_absolute_url }}" rel="product">{{ product.get_title|truncatewords:4 }}</a></h3>
         {% endblock %}
 
         {% block product_price %}
