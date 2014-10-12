@@ -35,7 +35,7 @@
             <form action="{% url 'customer:wishlists-remove-product' key=wishlist.key product_pk=product.id %}" method="post">
                 {% csrf_token %}
                 {% blocktrans with name=wishlist.name url=wishlist.get_absolute_url %}
-                    <span class="text-left">Product is in <a href="{{ url }}">'{{ name }}'</a> wishlist.</span>
+                    <span class="pull-left">Product is in <a href="{{ url }}">'{{ name }}'</a> wishlist.</span>
                 {% endblocktrans %}
                 <button type="submit" class="button tiny secondary">{% trans "Remove" %}</button>
             </form>

@@ -7,15 +7,15 @@
 
 {% if session.price.exists %}
     {% if session.price.is_tax_known %}
-        <h2 class="price_color" itemprop="price" content="session.price.incl_tax">{{ session.price.incl_tax|currency:session.price.currency }}</h2>
+        <h2 class="price_color" itemprop="price">{{ session.price.incl_tax|currency:session.price.currency }}</h2>
     {% else %}
-        <h2 class="price_color" itemprop="price" content="session.price.excl_tax">{{ session.price.excl_tax|currency:session.price.currency }}</h2>
+        <h2 class="price_color" itemprop="price">{{ session.price.excl_tax|currency:session.price.currency }}</h2>
     {% endif %}
 {% else %}
     <h2 class="price_color"></h2>
 {% endif %}
-<p class="{{ session.availability.code }} availability in-stock" itemprop="availability" content="in_stock">
-    <i class="fi-{% if session.availability.is_available_to_buy %}check{% else %}x{% endif %}"></i>
+<p class="{{ session.availability.code }} availability" itemprop="availability" content="in_stock">
+    <i class="fi-{% if session.availability.is_available_to_buy %}ok{% else %}remove{% endif %}"></i>
     {% if verbose %}
         {{ session.availability.message }}
     {% else %}

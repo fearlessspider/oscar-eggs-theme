@@ -8,7 +8,7 @@
     {% if all_images|length > 1 %}
         <div id="product_gallery" class="slider slider-for">
             {% for image in all_images %}
-                <div>
+                <div class="th">
                     {% thumbnail image.original "440x400" upscale=False as thumb %}
                     <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="th product-thumb" itemprop="image"/>
                     {% endthumbnail %}
@@ -17,9 +17,9 @@
         </div>
         <div id="product_gallery" class="slider slider-nav">
             {% for image in all_images %}
-                <div>
+                <div class="th">
                     {% thumbnail image.original "440x400" upscale=False as thumb %}
-                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="th"/>
+                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="th product-thumb"/>
                     {% endthumbnail %}
                 </div>
             {% endfor %}
@@ -29,10 +29,10 @@
 
         {# Only one image to show #}
         <div id="product_gallery">
-            <div>
+            <div class="th">
                 {% with image=product.primary_image %}
                     {% thumbnail image.original "440x400" upscale=False as thumb %}
-                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="th product-thumb" />
+                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
                     {% endthumbnail %}
                 {% endwith %}
             </div>
