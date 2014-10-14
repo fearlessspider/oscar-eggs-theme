@@ -27,14 +27,12 @@
     {% endif %}
     {% if products %}
         <section>
-            <div>
-                <ol class="row-fluid">
-                    {% for product in products %}
-                        <li class="span2 {% if forloop.counter0|divisibleby:"6" %}no-margin{% endif %}">{% render_product product %}</li>
-                    {% endfor %}
-                </ol>
-                {% include "partials/pagination.html" %}
+            <div class="row">
+                {% for product in products %}
+                    <div class="large-4 columns {% if forloop.counter0|divisibleby:"3" %}no-margin{% endif %}">{% render_product product %}</div>
+                {% endfor %}
             </div>
+            {% include "partials/pagination.html" %}
         </section>
     {% else %}
         <p class="nonefound">{% trans "No products found." %}</p>

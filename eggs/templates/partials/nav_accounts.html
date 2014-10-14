@@ -37,7 +37,7 @@
                                 <a href="{% url 'customer:notifications-inbox' %}">
                                     <i class="fi-clipboard-notes"></i>
                                     {% trans "Account" %}
-                                    <span class="label label-important">{{ num_unread_notifications }}</span>
+                                    <span class="label alert">{{ num_unread_notifications }}</span>
                                 </a>
                             {% else %}
                                 <a href="{% url 'customer:summary' %}"><i class="fi-address-book"></i> {% trans "Account" %}</a>
