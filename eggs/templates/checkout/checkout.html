@@ -102,8 +102,8 @@
         <div class="basket-title">
             <div class="row">
                 <h4 class="large-9 columns">{% trans "Product" %}</h4>
-                <h4 class="large-1 columns large-text-center">{% trans "Quantity" %}</h4>
-                <h4 class="large-2 columns large-text-right">{% trans "Price" %}</h4>
+                <h4 class="large-1 columns text-center">{% trans "Quantity" %}</h4>
+                <h4 class="large-2 columns text-right">{% trans "Price" %}</h4>
             </div>
         </div>
         {% for line in basket.all_lines %}
@@ -123,10 +123,10 @@
                         <h4><a href="{{ line.product.get_absolute_url }}">{{ line.description }}</a></h4>
                         <span class="availability {{ session.availability.code }}">{{ session.availability.message }}</span>
                     </div>
-                    <div class="large-1 columns large-text-center">
+                    <div class="large-1 columns text-center">
                         {{ line.quantity }}
                     </div>
-                    <div class="large-2 columns large-text-right">
+                    <div class="large-2 columns text-right">
                         <p class="price_color">
                             {% if not show_tax_separately and line.is_tax_known %}
                                 {{ line.line_price_incl_tax|currency:basket.currency }}
@@ -140,8 +140,8 @@
         {% endfor %}
 
         <div class="row">
-            <div class="large-6 columns">&nbsp;</div>
-            <div class="large-6 columns">
+            <div class="large-9 columns">&nbsp;</div>
+            <div class="large-3 columns">
                 {% include 'basket/partials/basket_totals.html' %}
             </div>
         </div>
