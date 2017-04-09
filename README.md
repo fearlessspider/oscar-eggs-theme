@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/eggforsale/oscar-eggs-theme/badge.svg?branch=master)](https://coveralls.io/github/eggforsale/oscar-eggs-theme?branch=master)
+
 oscar-eggs-theme
 ================
 
